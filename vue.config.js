@@ -6,6 +6,7 @@ module.exports={
                 changeOrigin:true,//true为开启代理
                 //secure: true, // 如果是https接口，需要配置这个参数
                 pathRewrite:{
+
                     '^/api': ''//路径的替换规则
                     /*
                      *这里的配置是正则表达式，以/api开头的路径将会被‘/'替换掉

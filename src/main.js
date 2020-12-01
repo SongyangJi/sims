@@ -10,9 +10,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
 
 // 导入异步传输
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-Vue.use(VueAxios,axios)
+// import axios from 'axios'
+// import VueAxios from 'vue-axios'
+// Vue.use(VueAxios,axios)
 
 
 Vue.config.productionTip = false

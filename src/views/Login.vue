@@ -52,7 +52,6 @@
                     pwd: this.loginForm.pwd
                 })
                 .then(response=>{
-                    console.log(response);
                     if(response.status==201){
                         this.$router.replace({path:'/home'});
                     }else{
@@ -64,7 +63,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .loginContainer {
         border-radius: 15px;
         background-clip: padding-box;
