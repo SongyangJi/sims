@@ -152,6 +152,8 @@
 
                             this.student = res.data.student;
 
+                            console.log(res);
+
                             let scores = res.data.scores;
 
                             if(scores.length==0){
@@ -161,7 +163,8 @@
                                 })
                                 return;
                             }
-                            console.log(scores);
+                            console.log('长度',scores.length,scores);
+
                             // of才是元素, in 只是 index
                             for(let dt of scores) {
                                 dt.GPA = ""+(dt.score>60 ?dt.score/10-5:0);

@@ -4,7 +4,7 @@
         <el-dialog title="名字匹配的所有学生" :visible.sync="dialog.state">
             <div>
                 <el-table :data="dialog.students">
-                    <el-table-column property="sid" label="日期"></el-table-column>
+                    <el-table-column property="sid" label="学号"></el-table-column>
                     <el-table-column property="sname" label="姓名" ></el-table-column>
                 </el-table>
             </div>
@@ -250,7 +250,8 @@
             },
             // 删除学生操作
             handleRemove() {
-                const api = '/api/student/' + this.inputSID;
+                const api = '/api/student/' + this.ruleForm.sid;
+                console.log(api);
                 deleteRequest(api)
                     .then(res => {
                         if (res.status == 204) {

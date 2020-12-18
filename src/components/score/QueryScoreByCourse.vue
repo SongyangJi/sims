@@ -37,6 +37,7 @@
                     fixed
                     prop="student.sid"
                     label="学号"
+                    sortable
             >
             </el-table-column>
             <el-table-column
@@ -58,6 +59,7 @@
             <el-table-column
                     prop="score"
                     label="分数"
+                    sortable
             >
             </el-table-column>
 

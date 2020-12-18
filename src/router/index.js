@@ -8,10 +8,15 @@ import DisplayCourses from "../components/course/DisplayCourses";
 import AddCourses from "../components/course/AddCourses";
 import AddAchievement from "../components/achievement/AddAchievement";
 import DisplayAchievement from "../components/achievement/DisplayAchievement";
-import UpLoadImages from "../components/UpLoadImages";
-
 import AddScore from "../views/AddScore";
 import DisplayScore from "../views/DisplayScore";
+
+
+
+import StudentHome from "../views/student_module/StudentHome";
+import StudentScore from "../components/student_module/StudentScore";
+import QueryCourses from "../components/student_module/QueryCourses";
+import MyCenter from "../components/student_module/MyCenter";
 
 Vue.use(VueRouter)
 
@@ -22,14 +27,35 @@ const routes = [
     component:Login
   },
   {
-    path: '/upload',
-    name: 'UpLoadSingleImage',
-    component: UpLoadImages
+    path:'/student-home',
+    name: 'StudentHome',
+    component: StudentHome,
+    children: [
+      {
+        path: 'my-score',
+        name: 'StudentScore',
+        component: StudentScore
+      },
+      {
+        path: 'courses',
+        name: 'Courses',
+        component: QueryCourses
+      },
+      {
+        path: 'center',
+        name: 'Center',
+        component: MyCenter
+      }
+    ]
   },
   {
     path: '/home',
     name:'Home',
     component: Home,
+    meta:{
+      // 表明页面需要进行拦截
+      requiredAuth: true
+    },
     children :[
       {
         path: 'display-students',

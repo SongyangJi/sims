@@ -12,18 +12,22 @@
             <el-divider><span style="font-size: 14px;color: #8c8c8c">统一认证中心</span></el-divider>
 
             <el-form-item prop="username">
-                <el-input size="normal" type="text" v-model="loginForm.aid" auto-complete="off"
-                          placeholder="职工号/学号" clearable prefix-icon="el-icon-user" @keydown.enter.native="login"></el-input>
+                <el-input size="normal" type="text" v-model="loginForm.id" auto-complete="off"
+                          placeholder="职工号/学号" clearable prefix-icon="el-icon-user"
+                          @keydown.enter.native="login"></el-input>
             </el-form-item>
 
             <el-form-item prop="password">
                 <el-input size="normal" type="password" v-model="loginForm.pwd" auto-complete="off"
-                          placeholder="密码" prefix-icon="el-icon-lock" @keydown.enter.native="login" show-password clearable></el-input>
+                          placeholder="密码" prefix-icon="el-icon-lock" @keydown.enter.native="login" show-password
+                          clearable></el-input>
             </el-form-item>
 
             <el-form-item style="width: 100%">
-                <el-button type="primary" style="width: 100%;border: none" v-on:click="login">登录</el-button>
+                <el-button type="primary" style="width: 40%;border: none" v-on:click="student_login">学生登录</el-button>
+                <el-button type="success" style="width: 40%;border: none" v-on:click="login">教师登录</el-button>
             </el-form-item>
+
 
         </el-form>
     </div>
@@ -35,28 +39,54 @@
 
     export default {
         name: 'Login',
-        data () {
+        data() {
             return {
                 loginForm: {
-                    aid: '',
+                    id: '',
                     pwd: ''
                 },
                 responseResult: []
             }
         },
         methods: {
-            login () {
+            login() {
                 const api = 'api/login';
-               postRequest(api,{
-                    aid: this.loginForm.aid,
+                postRequest(api, {
+                    aid: this.loginForm.id,
                     pwd: this.loginForm.pwd
                 })
-                .then(response=>{
-                    if(response.status==201){
-                        this.$router.replace({path:'/home'});
+                    .then(response => {
+                        if (response.status == 201) {
+                            // 在 store 的 state存储 状态
+                            this.$store.commit('login', this.loginForm);
+                            this.$router.replace({path: '/home'});
+                        } else {
+                            alert("密码错误！");
+                        }
+                    })
+                    .catch(res => {
+                        this.console.log("内部错误");
+                    })
+            },
+            student_login(){
+                const api = 'api/student-login';
+                let stu = {
+                    sid: this.loginForm.id,
+                    pwd: this.loginForm.pwd
+                };
+                console.log(stu);
+                postRequest(api,stu)
+                .then(res=>{
+                    if(res.status==200){
+                        this.$message.success("登录成功");
+                        this.$store.commit('student_login', this.loginForm);
+                        this.$router.replace({path: '/student-home'});
                     }else{
-                        alert("密码错误！");
+                        this.$message.error("此学生账号密码不匹配");
                     }
+                })
+                .catch(res=>{
+
                 })
             }
         }

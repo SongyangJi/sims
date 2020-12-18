@@ -8,14 +8,25 @@ import ElementUI from 'element-ui'
 // 样式需要单独导入
 import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI)
-
-// 导入异步传输
-// import axios from 'axios'
-// import VueAxios from 'vue-axios'
-// Vue.use(VueAxios,axios)
-
-
 Vue.config.productionTip = false
+
+router.beforeEach((to,from,next) => {
+  console.log('路由守卫',to,from);
+  if(to.meta.requiredAuth){
+    if(store.state.administrator.id){
+      next();
+    }else{
+      // 在登录成功后自动路由到目标位置
+      next({
+        path:'login',
+        query:{redirect:to.fullPath}
+      })
+    }
+  }else{
+    next();
+  }
+})
+
 
 new Vue({
   router,
