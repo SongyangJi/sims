@@ -6,9 +6,10 @@
             </div>
             <el-table
                     :data="courseData"
-                    height="500"
                     border
-                    style="width: 100%">
+                    :summary-method="getSummaries"
+                    show-summary
+                    style="width: 100%; margin-top: 20px">
                 <el-table-column
                         prop="cid"
                         label="课程号">
@@ -39,16 +40,17 @@
                         label="开课日期">
                 </el-table-column>
 
+
             </el-table>
         </el-card>
     </div>
 </template>
-<script>
 
+<script>
     import {getRequest} from "../../utils/api";
 
     export default {
-        name: "DisplayCourse",
+        name: "DisplayMyCourses",
         data() {
             return {
                 courseData: []
@@ -59,9 +61,34 @@
             this.refresh();
         },
         methods: {
+            getSummaries(param) {
+                const { columns, data } = param;
+                const sums = [];
+                columns.forEach((column, index) => {
+                    if (index === 0) {
+                        sums[index] = '总修读学分';
+                        return;
+                    }
+                    const values = data.map(item => Number(item[column.property]));
+                    if (!values.every(value => isNaN(value))) {
+                        sums[index] = values.reduce((prev, curr) => {
+                            const value = Number(curr);
+                            if (!isNaN(value)) {
+                                return prev + curr;
+                            } else {
+                                return prev;
+                            }
+                        }, 0);
+                        sums[index] += '学分';
+                    } else {
+                        sums[index] = '';
+                    }
+                });
 
+                return sums;
+            },
             refresh() {
-                const api = 'api/all-courses';
+                const api = 'api/course-student/'+this.$store.getters.getStudentID;
                 getRequest(api)
                     .then(response => {
                         // console.log(response);
@@ -73,22 +100,11 @@
                             }
                         }
                     })
-            }
-
+            },
         }
     }
 </script>
 
 <style scoped>
-
-    /*    .clearfix:before,*/
-    /*    .clearfix:after {*/
-    /*        display: table;*/
-    /*        content: "";*/
-    /*    }*/
-
-    /*    .clearfix:after {*/
-    /*        clear: both*/
-    /*    }*/
 
 </style>

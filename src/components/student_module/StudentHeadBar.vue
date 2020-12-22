@@ -24,10 +24,9 @@
                 console.log(cmd);
                 if (cmd == 'center'){
                     this.$router.replace({path: '/student-home/center'});
-                }else if(cmd == 'myHome'){
-                    alert('个人中心')
                 }else if(cmd == 'logout'){
-                    alert('退出')
+                    window.sessionStorage.removeItem('student')
+                    this.$router.replace({path: '/login'});
                 }
             }
         }

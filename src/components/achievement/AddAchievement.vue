@@ -2,6 +2,10 @@
     <el-card>
         <el-form ref="form" :model="form" label-width="80px" label-position="left" :rules="rules">
 
+            <el-form-item label="学生学号" prop="sid">
+                <el-input v-model="form.sid"></el-input>
+            </el-form-item>
+
             <el-form-item label="成就名称" prop="name">
                 <el-input v-model="form.name"></el-input>
             </el-form-item>
@@ -64,22 +68,27 @@
         </el-form>
     </el-card>
 </template>
+
 <script>
     import UpLoadImages from "../UpLoadImages";
+    import {postRequest} from "../../utils/api";
 
     export default {
         name: "Achievement",
         data() {
             return {
+
                 form: {
                     name: "",
                     description: "",
                     level: "",
                     kind: "",
                     time: "",
+                    sid:null,
                 },
-                rules:{
-                    name:[{required:true,message: '不可缺少'}]
+                rules: {
+                    name: [{required: true, message: '不可缺少'}],
+                    sid: [{required: true, message: '不可缺少'}]
                 }
             };
         },
@@ -89,10 +98,32 @@
         methods: {
 
             onSubmit(formName) {
-                this.$refs[formName].validate((valid)=>{
-                    if(valid){
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
 
-                    }else{
+                        let achievement = this.form;
+                        achievement.urls = this.$refs['UpLoadImages'].getURLS();
+
+                        console.log(achievement);
+
+                        const api = 'api/achievement/'+this.form.sid;
+
+                        postRequest(api, achievement)
+                            .then(res => {
+                                if (res.status == 201) {
+                                    this.$notify.success({
+                                        title: '成功',
+                                        message: '成功添加学生社会成果！'
+                                    });
+                                    this.$refs['form'].resetFields();
+                                    this.$refs['UpLoadImages'].setURLS([]);
+                                }
+                            })
+
+
+
+
+                    } else {
                         this.$message.warning('尚有信息缺失');
                         return false;
                     }
@@ -101,6 +132,7 @@
             },
             resetForm(form) {
                 this.$refs[form].resetFields();
+                this.$refs['UpLoadImages'].setURLS([]);
             }
         },
     };

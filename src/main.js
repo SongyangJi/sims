@@ -12,8 +12,11 @@ Vue.config.productionTip = false
 
 router.beforeEach((to,from,next) => {
   console.log('路由守卫',to,from);
+
+  const path = to.path;
+
   if(to.meta.requiredAuth){
-    if(store.state.administrator.id){
+    if(path.match('/home/*') && store.state.administrator.id  || path.match('/student-home/*') && store.getters.getStudentID){
       next();
     }else{
       // 在登录成功后自动路由到目标位置

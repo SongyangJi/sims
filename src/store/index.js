@@ -20,15 +20,18 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    getStudentID: state => state.student.id
+    getStudentID: state => state.student.id,
+
   },
   mutations: {
     login(state,admin){
       state.administrator = admin;
+      admin.pwd = '';
       window.sessionStorage.setItem('admin',JSON.stringify(admin));
     },
     student_login(state,student){
       state.student = student;
+      student.pwd = '';
       window.sessionStorage.setItem('student',JSON.stringify(student));
     }
   },

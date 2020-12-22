@@ -17,11 +17,11 @@
                     </template>
                     <el-menu-item-group style="float: right">
 
-                        <el-menu-item index="">
-                            选课
+                        <el-menu-item index="/student-home/display-my-courses">
+                            我的课表
                         </el-menu-item>
                         <el-menu-item index="/student-home/courses">
-                            教学课程列表
+                            选课列表
                         </el-menu-item>
 
                     </el-menu-item-group>
@@ -37,7 +37,7 @@
                     </template>
                 </el-menu-item>
 
-                <el-menu-item index="">
+                <el-menu-item index="/student-home/display-my-achievement">
                     <template slot="title">
                         <i class="el-icon-collection"></i>
                         <span>社会成果</span>

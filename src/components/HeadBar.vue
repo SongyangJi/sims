@@ -28,7 +28,9 @@
                 }else if(cmd == 'myHome'){
                     alert('个人中心')
                 }else if(cmd == 'logout'){
-                    alert('退出')
+                    window.sessionStorage.removeItem('admin')
+                    this.$router.replace({path: '/login'});
+                    // alert('退出')
                 }
             }
         }

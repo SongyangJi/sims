@@ -66,7 +66,7 @@
                     </template>
                     <el-menu-item-group style="float: right">
                         <el-menu-item index="/home/add-achievement">添加社会成果</el-menu-item>
-                        <el-menu-item index="/home/display-achievement">查看社会成果</el-menu-item>
+<!--                        <el-menu-item index="/home/display-achievement">查看社会成果</el-menu-item>-->
                     </el-menu-item-group>
                 </el-submenu>
             </el-menu>

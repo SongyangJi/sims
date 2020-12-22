@@ -1,5 +1,6 @@
 module.exports={
     devServer:{
+        port:8188,
         proxy:{
             "/api":{
                 target:'http://localhost:8088',//访问的服务器地址
